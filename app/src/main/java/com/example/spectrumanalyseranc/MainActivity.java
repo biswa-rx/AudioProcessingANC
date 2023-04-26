@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private XYPlot spectrumPlot, ancPlot;
-//    private Handler mHandler;
+    private Handler mHandler;
     private static final String TAG = "MainActivity";
 
     int audioSource, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         spectrumPlot = findViewById(R.id.spectrum_plot);
         ancPlot = findViewById(R.id.ANC_plot);
-//        mHandler = new Handler(Looper.getMainLooper());
+        mHandler = new Handler(Looper.getMainLooper());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     channelConfig = AudioFormat.CHANNEL_IN_MONO;
                     audioFormat = AudioFormat.ENCODING_PCM_16BIT;
 //                  int bufferSizeInBytes = AudioRecord.getMinBufferSize(sampleRateInHz, channelConfig, audioFormat);
-                    bufferSizeInBytes = 4096;
+                    bufferSizeInBytes = 16384;
                     if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
@@ -86,10 +86,15 @@ public class MainActivity extends AppCompatActivity {
                             complexSamples[i] = new Complex(audioSamples[i], 0);
                         }
                         fft(complexSamples, false);
-                        updateSpectrumGraph(complexSamples,spectrumPlot);
-                        highPassFilter(complexSamples, 1500, 44100);
-                        updateSpectrumGraph(complexSamples,ancPlot);
-                        fft(complexSamples, true);
+                        mHandler.post(new Runnable() {
+                            public void run() {
+                                Log.d(TAG, "run: running Handler");
+                                updateSpectrumGraph(complexSamples,spectrumPlot);
+                            }
+                        });
+//                        highPassFilter(complexSamples, 1500, 44100);
+//                        updateSpectrumGraph(complexSamples,ancPlot);
+//                        fft(complexSamples, true);
                         if (outputSoundEnable) {
                             byte[] filteredBytes = new byte[2 * complexSamples.length];
                             for (int i = 0; i < complexSamples.length; i++) {
@@ -121,19 +126,57 @@ public class MainActivity extends AppCompatActivity {
         return samples;
     }
     private void updateSpectrumGraph(Complex[] complexSamples, XYPlot xyPlot) {
-        Number[] frequencyDomain = new Number[complexSamples.length/2];
-        for (int i = 0; i < complexSamples.length/2; i++) {
-//            short sample = (short) (Math.sqrt((complexSamples[i].re * complexSamples[i].re) + (complexSamples[i].im * complexSamples[i].im)) * 32767.0);
-            short sample = (short) (complexSamples[i].re * 2000.0);
-            frequencyDomain[i] = sample;
+        //FILTER FOR +- PAIR
+//        Number[] frequencyDomain = new Number[complexSamples.length/2];
+//        for (int i = 0; i < complexSamples.length/2; i++) {
+////            short sample = (short) (Math.sqrt((complexSamples[i].re * complexSamples[i].re) + (complexSamples[i].im * complexSamples[i].im)) * 32767.0);
+//            short sample = (short) (complexSamples[i].re * 1000.0);
+//            if(sample<0){
+//                frequencyDomain[i] = -sample;
+//            }else {
+//                frequencyDomain[i] = sample;
+//            }
+//        }
+
+//        MY FILTER AVG
+//        int divFacter = 3,sum = 0;
+//        Number[] frequencyDomain = new Number[(complexSamples.length/(2*divFacter))+1];
+//        for (int i = 0; i < complexSamples.length/2; i+=divFacter) {
+//            for(int j=0;j<divFacter;j++) {
+//                short sample = (short) (complexSamples[i+j].re * 1000.0);
+//                if (sample < 0) {
+//                    sum+= -1*sample;
+//                }else {
+//                    sum += sample;
+//                }
+//            }
+//            frequencyDomain[i/divFacter] = sum/divFacter;
+//            sum = 0;
+//        }
+
+        //MY FILTER MAX
+        int maxFacter = 10,max = 0;
+        Number[] frequencyDomain = new Number[(complexSamples.length/(2*maxFacter))+1];
+        for (int i = 0; i < complexSamples.length/2; i+=maxFacter) {
+            for(int j=0;j<maxFacter;j++) {
+                short sample = (short) (complexSamples[i+j].re * 1000.0);
+                if (sample < 0) {
+                    max = Math.max(max,-1*sample);
+                }else {
+                    max = Math.max(max,sample);
+                }
+            }
+            frequencyDomain[i/maxFacter] = max;
+            max = 0;
         }
+
         XYSeries series1 = new SimpleXYSeries(
                 Arrays.asList(frequencyDomain), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
         LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.RED, null, null, null);
         series1Format.setInterpolationParams(
                 new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
-        xyPlot.setDomainBoundaries(0, frequencyDomain.length, BoundaryMode.AUTO);
-        xyPlot.setRangeBoundaries(Short.MIN_VALUE,Short.MAX_VALUE,BoundaryMode.AUTO);
+        xyPlot.setDomainBoundaries(0, frequencyDomain.length, BoundaryMode.FIXED);
+        xyPlot.setRangeBoundaries(0,Short.MAX_VALUE,BoundaryMode.FIXED);
         xyPlot.clear();
         xyPlot.addSeries(series1, series1Format);
         Log.d(TAG, "run: running updateSpectrum");
