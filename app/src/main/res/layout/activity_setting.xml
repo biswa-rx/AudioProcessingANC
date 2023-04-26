@@ -2,90 +2,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ap_black"
+    android:background="@color/app_background"
     android:orientation="vertical">
 
-    <TextView
 
-        android:layout_width="224dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Audio "
-        android:textColor="#FFFF00"
-        android:textSize="20sp" />
+        android:background="@color/toolbar_color"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginVertical="20dp"
+        android:text="@string/audio"
+        android:textColor="#FFBD00"
+        android:textSize="14sp" />
 
     <LinearLayout
-
         android:id="@+id/audio_source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-
-            android:layout_marginTop="3dp"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:text="Audio source:"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/audio_source_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="defult"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:text="Default"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
-        android:background="#FFFFFF"
-
+        android:background="@color/line_color"
         />
 
     <LinearLayout
-
         android:id="@+id/select_sampling_rate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
 
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="Sampling rate:"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
+            android:text="@string/sampling_rate"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:id="@+id/select_sampling_rate_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Auto(48000Hz)"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:text="48000Hz"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
         android:layout_marginStart="10dp"
-        android:layout_width="150dp"
-        android:layout_height="49dp"
-        android:text="Processing"
-        android:textColor="#FFFF00"
-        android:textSize="20sp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/processing"
+        android:layout_marginVertical="20dp"
+        android:textColor="#FFBD00"
+        android:textSize="14sp" />
 
     <LinearLayout
 
@@ -95,112 +99,95 @@
         android:id="@+id/select_fft_size">
 
         <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="FFT size"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
+            android:text="@string/fft_size"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:id="@+id/select_fft_size_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="512 bins(94 Hz/bin)"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
-        android:background="#FFFFFF"
-
+        android:background="@color/line_color"
         />
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/select_decimation">
 
         <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="Decimations"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
+            android:text="@string/decimations"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:id="@+id/select_decimation_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5(2.9 Hz/bin @DC"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:text="5(2.9 Hz/bin @DC)"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
-        android:background="#FFFFFF"
-
+        android:background="@color/line_color"
         />
 
     <LinearLayout
-
         android:id="@+id/select_window_function"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         >
 
         <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="Window Function"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
+            android:text="@string/window_function"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="10dp"
             android:id="@+id/select_window_function_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Blackman-Harris"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/blackman_harris"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
-        android:background="#FFFFFF"
-
+        android:background="@color/line_color"
         />
 
     <LinearLayout
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="10dp"
         android:id="@+id/select_desired_transform_interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -208,58 +195,51 @@
 
         <TextView
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="Desired transform interval"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
+            android:text="@string/desired_transform_interval"
+            android:textColor="@color/white"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="10dp"
             android:id="@+id/select_desired_transform_interval_tv"
-
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20 ms(50Hz)"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
 
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
-        android:background="#FFFFFF"
-
+        android:background="@color/line_color"
         />
     <LinearLayout
-
         android:id="@+id/select_exponential_smoothing_factor"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:text="Exponential smoothing factor"
-            android:textColor="#FFFFFF"
-
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_marginBottom="3dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exponential_smoothing_factor"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+        <TextView
             android:id="@+id/select_exponential_smoothing_factor_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
             android:text="0.30"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textColor="@color/secondary_text_color"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

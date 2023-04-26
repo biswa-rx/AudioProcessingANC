@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SpectrumAnalyserANC</string>
+    <string name="audio">Audio</string>
+    <string name="sampling_rate">Sampling rate</string>
+    <string name="decimations">Decimations</string>
+    <string name="window_function">Window Function</string>
+    <string name="blackman_harris">Blackman-Harris</string>
+    <string name="desired_transform_interval">Desired transform interval</string>
+    <string name="exponential_smoothing_factor">Exponential smoothing factor</string>
+    <string name="fft_size">FFT size</string>
+    <string name="processing">Processing</string>
 </resources>
